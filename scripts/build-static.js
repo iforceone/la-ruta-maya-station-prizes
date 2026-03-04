@@ -51,8 +51,10 @@ function main() {
   ensureDir(DIST_DIR);
 
   copyFile(path.join(PUBLIC_DIR, 'index.html'), path.join(DIST_DIR, 'index.html'));
+  copyFile(path.join(PUBLIC_DIR, 'admin.html'), path.join(DIST_DIR, 'admin.html'));
   copyFile(path.join(PUBLIC_DIR, 'styles.css'), path.join(DIST_DIR, 'styles.css'));
   copyFile(path.join(PUBLIC_DIR, 'app.js'), path.join(DIST_DIR, 'app.js'));
+  copyFile(path.join(PUBLIC_DIR, 'admin.js'), path.join(DIST_DIR, 'admin.js'));
 
   fs.writeFileSync(path.join(DIST_DIR, 'data.json'), JSON.stringify(publicData, null, 2), 'utf8');
 

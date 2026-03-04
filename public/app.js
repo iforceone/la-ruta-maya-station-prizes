@@ -21,6 +21,18 @@ function text(value) {
   return value === null || value === undefined ? '' : String(value);
 }
 
+function formatPrizeValue(value) {
+  const raw = text(value).trim();
+  if (!raw) return '';
+
+  if (/^-?\d+(\.\d+)?$/.test(raw)) {
+    const num = Number(raw);
+    return `$${num.toFixed(2)}`;
+  }
+
+  return raw;
+}
+
 function renderRows(prizes) {
   const tbody = document.getElementById('table-body');
   tbody.innerHTML = prizes.map((p) => `
@@ -28,7 +40,7 @@ function renderRows(prizes) {
       <td>${escapeHtml(text(p.location))}</td>
       <td>${escapeHtml(text(p.place))}</td>
       <td>${escapeHtml(text(p.categoryCode))}</td>
-      <td>${escapeHtml(text(p.prizeValue))}</td>
+      <td>${escapeHtml(formatPrizeValue(p.prizeValue))}</td>
       <td>${escapeHtml(text(p.prizeSponsor))}</td>
       <td>${escapeHtml(text(p.winnerTeamName))}</td>
       <td>${escapeHtml(text(p.winnerTeamNumber))}</td>

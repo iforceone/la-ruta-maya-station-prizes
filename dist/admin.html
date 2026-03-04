@@ -1,0 +1,90 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Prize Admin</title>
+  <link rel="stylesheet" href="/styles.css" />
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>Prize Admin</h1>
+      <p class="muted">Update winners, edit sponsors, and add new station/overall prizes.</p>
+      <p class="muted"><a href="/">Back to public board</a></p>
+    </header>
+
+    <section class="card" id="login-card">
+      <div style="padding:16px;max-width:420px;">
+        <h3 style="margin-top:0;">Admin Login</h3>
+        <div class="grid" style="grid-template-columns:1fr;">
+          <label>Username <input id="username" value="admin" /></label>
+          <label>Password <input id="password" type="password" /></label>
+        </div>
+        <div class="toolbar" style="margin-top:12px;">
+          <button class="primary" id="login-btn">Login</button>
+          <span id="login-msg" class="muted"></span>
+        </div>
+      </div>
+    </section>
+
+    <section class="card" id="admin-card" style="display:none; margin-top: 14px;">
+      <div style="padding:14px;border-bottom:1px solid var(--line);">
+        <div class="toolbar">
+          <strong id="admin-user"></strong>
+          <button id="refresh-btn">Refresh</button>
+          <button id="logout-btn">Logout</button>
+        </div>
+        <form id="create-form">
+          <div class="grid">
+            <label>Sheet
+              <select id="new-sheet">
+                <option>DAY 1</option>
+                <option>DAY 2</option>
+                <option>DAY 3</option>
+                <option>DAY 4</option>
+                <option>OVERALL</option>
+              </select>
+            </label>
+            <label>Location/Item <input id="new-location" required /></label>
+            <label>Place <input id="new-place" required /></label>
+            <label>Code <input id="new-code" /></label>
+            <label>Prize <input id="new-prize" /></label>
+            <label>Prize Sponsor <input id="new-sponsor" /></label>
+            <label>Winner Team Name <input id="new-winner" /></label>
+            <label>Winner Team # <input id="new-team-number" /></label>
+            <label>Notes <input id="new-notes" /></label>
+          </div>
+          <div class="toolbar" style="margin-top:10px;">
+            <button class="primary" type="submit">Add Prize</button>
+            <span id="create-msg" class="muted"></span>
+          </div>
+        </form>
+      </div>
+
+      <div id="tabs" class="tabs" style="padding:12px 12px 0;"></div>
+
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Location / Item</th>
+              <th>Place</th>
+              <th>Code</th>
+              <th>Prize</th>
+              <th>Prize Sponsor</th>
+              <th>Winner Team Name</th>
+              <th>Team #</th>
+              <th>Notes</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody id="table-body"></tbody>
+        </table>
+      </div>
+    </section>
+  </div>
+
+  <script src="/admin.js"></script>
+</body>
+</html>
