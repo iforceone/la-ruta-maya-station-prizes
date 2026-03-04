@@ -1,0 +1,15 @@
+{
+  "name": "la-ruta-maya-prizes",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Belikin La Ruta Maya prize tracker with admin backend",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "init-admin": "node server.js --init-admin",
+    "build": "node scripts/build-static.js"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}
