@@ -38,18 +38,21 @@ function formatPrizeValue(value) {
 
 function renderRows(prizes) {
   const tbody = document.getElementById('table-body');
-  tbody.innerHTML = prizes.map((p) => `
-    <tr class="${text(p.winnerTeamName).trim() ? 'winner-row' : ''}">
-      <td>${escapeHtml(text(p.location))}</td>
-      <td>${escapeHtml(text(p.place))}</td>
-      <td>${escapeHtml(text(p.categoryCode))}</td>
-      <td>${escapeHtml(formatPrizeValue(p.prizeValue))}</td>
-      <td>${escapeHtml(text(p.prizeSponsor))}</td>
-      <td>${escapeHtml(text(p.winnerTeamName))}</td>
-      <td>${escapeHtml(text(p.winnerTeamNumber))}</td>
-      <td>${escapeHtml(text(p.notes))}</td>
-    </tr>
-  `).join('');
+  tbody.innerHTML = prizes.map((p, i) => {
+    const isWinner = !!text(p.winnerTeamName).trim();
+    return `
+      <tr class="${isWinner ? 'winner-row' : ''} fade-in-row" style="animation-delay: ${Math.min(i * 0.03, 1.5)}s">
+        <td>${escapeHtml(text(p.location))}</td>
+        <td>${escapeHtml(text(p.place))}</td>
+        <td><span class="badge ${text(p.categoryCode).toLowerCase()}">${escapeHtml(text(p.categoryCode))}</span></td>
+        <td class="prize-value">${escapeHtml(formatPrizeValue(p.prizeValue))}</td>
+        <td>${escapeHtml(text(p.prizeSponsor))}</td>
+        <td class="winner-name">${isWinner ? '🏆 ' + escapeHtml(text(p.winnerTeamName)) : ''}</td>
+        <td class="team-number">${isWinner ? escapeHtml(text(p.winnerTeamNumber)) : ''}</td>
+        <td class="notes">${escapeHtml(text(p.notes))}</td>
+      </tr>
+    `;
+  }).join('');
 }
 
 function escapeHtml(value) {

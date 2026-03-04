@@ -1,0 +1,36 @@
+# Redesign Implementation Plan
+
+## Goal Description
+The current La Ruta Maya Station Prizes application uses a very simple, spreadsheet-like interface. The goal is to make it visually engaging and "fan-friendly" by applying modern web design aesthetics, utilizing existing brand imagery, and improving the presentation of the prize data. This will create a more premium, exciting experience for fans following the race.
+
+## Proposed Changes
+
+### Frontend Codebase
+Summary: Overhaul the UI with vibrant coloring, modern typography, micro-animations, and a highly polished presentation.
+
+#### [MODIFY] [index.html](file:///c:/Dev/La_Ruta_Maya/Station%20Pirzes/public/index.html)
+- Add Google Fonts (e.g., 'Outfit' and 'Inter') to elevate typography.
+- Transform the `<header>` into a visually striking 'Hero' section.
+- Integrate the existing imagery ([larutamaya2026.webp](file:///c:/Dev/La_Ruta_Maya/Station%20Pirzes/public/larutamaya2026.webp) logo and [Belikin-wordpress-image-838x471.webp](file:///c:/Dev/La_Ruta_Maya/Station%20Pirzes/public/Belikin-wordpress-image-838x471.webp) as background/banner elements).
+- Add container structures to allow for better responsive styling.
+
+#### [MODIFY] [styles.css](file:///c:/Dev/La_Ruta_Maya/Station%20Pirzes/public/styles.css)
+- Define a modern, tropical/Belikin-inspired color palette (rich greens, gold/yellows, tropical cyans, and deep contrast colors).
+- Replace the bare table look with a polished, glassmorphism-inspired or softly shadowed card design.
+- Style the tabs as vibrant "pills" that look clickable and reactive.
+- Add CSS animations (e.g., smooth fade-ins and slide-ups for table rows, hover effects).
+- Highlight "Winner" rows dramatically (using gold accents or subtle glow effects) so they stand out like true champions.
+
+#### [MODIFY] [app.js](file:///c:/Dev/La_Ruta_Maya/Station%20Pirzes/public/app.js)
+- Inject animation delays into dynamically rendered rows so they cascade in smoothly (staggered entrance).
+- Potentially add icons (like a 🏆 emoji or SVG) automatically to winner rows.
+
+## Verification Plan
+
+### Automated/Local Tests
+- Run the server locally using `npm start` (which runs `node server.js`).
+- Use the `browser_subagent` to navigate to `http://localhost:3000` (or the configured port) and capture a screenshot/video of the new animated UI.
+
+### Manual Verification
+- The user can review the browser subagent recording.
+- The user can deploy the changes to Vercel and view the updated live site to ensure the aesthetics meet their expectations.
