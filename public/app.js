@@ -1,3 +1,6 @@
+let allSheets = [];
+let selectedSheetKey = '';
+
 async function fetchData() {
   if (window.__PRIZE_DATA__) {
     return window.__PRIZE_DATA__;
@@ -36,7 +39,7 @@ function formatPrizeValue(value) {
 function renderRows(prizes) {
   const tbody = document.getElementById('table-body');
   tbody.innerHTML = prizes.map((p) => `
-    <tr>
+    <tr class="${text(p.winnerTeamName).trim() ? 'winner-row' : ''}">
       <td>${escapeHtml(text(p.location))}</td>
       <td>${escapeHtml(text(p.place))}</td>
       <td>${escapeHtml(text(p.categoryCode))}</td>
@@ -63,29 +66,50 @@ function renderTabs(sheets, onSelect) {
   tabs.innerHTML = '';
   sheets.forEach((sheet, idx) => {
     const btn = document.createElement('button');
-    btn.className = `tab-btn${idx === 0 ? ' active' : ''}`;
+    const isActive = (selectedSheetKey && selectedSheetKey === sheet.key) || (!selectedSheetKey && idx === 0);
+    btn.className = `tab-btn${isActive ? ' active' : ''}`;
     btn.textContent = `${sheet.name} (${sheet.prizes.length})`;
     btn.addEventListener('click', () => {
       document.querySelectorAll('.tab-btn').forEach((b) => b.classList.remove('active'));
       btn.classList.add('active');
+      selectedSheetKey = sheet.key;
       onSelect(sheet);
     });
     tabs.appendChild(btn);
   });
 }
 
-(async () => {
+function applyData(data) {
+  const sheets = (data.sheets || []).sort((a, b) => a.name.localeCompare(b.name));
+
+  const order = ['DAY 1', 'DAY 2', 'DAY 3', 'DAY 4', 'OVERALL'];
+  sheets.sort((a, b) => order.indexOf(a.name) - order.indexOf(b.name));
+
+  allSheets = sheets;
+
+  if (!selectedSheetKey && sheets[0]) {
+    selectedSheetKey = sheets[0].key;
+  }
+
+  renderTabs(sheets, (sheet) => renderRows(sheet.prizes));
+
+  const selected = sheets.find((s) => s.key === selectedSheetKey) || sheets[0];
+  if (selected) {
+    renderRows(selected.prizes);
+  }
+}
+
+async function refreshBoard() {
   try {
     const data = await fetchData();
-    const sheets = (data.sheets || []).sort((a, b) => a.name.localeCompare(b.name));
-
-    const order = ['DAY 1', 'DAY 2', 'DAY 3', 'DAY 4', 'OVERALL'];
-    sheets.sort((a, b) => order.indexOf(a.name) - order.indexOf(b.name));
-
-    renderTabs(sheets, (sheet) => renderRows(sheet.prizes));
-    if (sheets[0]) renderRows(sheets[0].prizes);
+    applyData(data);
   } catch (error) {
     const tbody = document.getElementById('table-body');
     tbody.innerHTML = `<tr><td colspan="8">${escapeHtml(error.message)}</td></tr>`;
   }
+}
+
+(async () => {
+  await refreshBoard();
+  setInterval(refreshBoard, 30000);
 })();

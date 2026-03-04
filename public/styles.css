@@ -104,6 +104,14 @@ tr:hover td {
   background: #fffbf3;
 }
 
+tr.winner-row td {
+  background: #e7f7e7;
+}
+
+tr.winner-row:hover td {
+  background: #dcf3dc;
+}
+
 input,
 select,
 button,
